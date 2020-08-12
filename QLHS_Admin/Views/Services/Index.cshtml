@@ -1,0 +1,99 @@
+﻿@model IEnumerable<QLHS_Admin.Models.Service>
+
+@{
+    ViewData["Title"] = "Service";
+}
+
+@using System.Globalization;
+
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title text-right">
+            <a asp-action="Create" class="text-primary"> <i class="fa fa-plus "> </i> Add Service</a>
+        </h4>
+
+        <div class="row">
+
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                        <thead class="text-center">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Duration
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Service_ID)
+                                    </td>
+                                    <td>
+                                        <img src=@item.Service_Img />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Service_Name)
+                                    </td>
+                                    <td class="text-right">
+                                        @item.Service_Price.ToString("C0", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td width="30%">
+                                        @Html.DisplayFor(modelItem => item.Service_Desc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Service_Dur)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Service_ID">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Service_ID">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.Service_ID">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- plugins:js -->
+<script src="/Admin/vendors/js/vendor.bundle.base.js"></script>
+<script src="/Admin/vendors/js/vendor.bundle.addons.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="/Admin/js/off-canvas.js"></script>
+<script src="/Admin/js/hoverable-collapse.js"></script>
+<script src="/Admin/js/misc.js"></script>
+<script src="/Admin/js/settings.js"></script>
+<script src="/Admin/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/Admin/js/dashboard.js"></script>
+<script src="/Admin/js/editorDemo.js"></script>
+<script src="/Admin/js/data-table.js"></script>

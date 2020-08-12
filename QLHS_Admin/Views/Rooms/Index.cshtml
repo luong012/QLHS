@@ -1,0 +1,93 @@
+﻿@model IEnumerable<object>
+
+@{
+    ViewData["Title"] = "Room";
+}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title text-right">
+            <a asp-action="Create" class="text-primary"> <i class="fa fa-plus "> </i> Add Room</a>
+        </h4>
+
+        <div class="row">
+
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                        <thead>
+                            <tr class="text-center">
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Room Type
+                                </th>
+                                <th>
+                                    Facility
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @item.GetType().GetProperty("Room_ID").GetValue(item, null)
+                                </td>
+                                <td>
+                                    <img src=@item.GetType().GetProperty("Room_Img").GetValue(item, null) />
+                                </td>
+                                <td>
+                                    @item.GetType().GetProperty("RoomType_Name").GetValue(item, null)
+                                </td>
+                                <td>
+                                    @item.GetType().GetProperty("Fac_Name").GetValue(item, null)
+                                </td>
+                                <td>
+                                    @{
+                                        if ((int)item.GetType().GetProperty("Room_Status").GetValue(item, null) == 0)
+                                        {<span class="badge badge-pill badge-success">Available</span>}
+                                        else
+                                        { <span class="badge badge-pill badge-danger">Unavailable</span>}
+                                        }
+
+                                </td>
+
+
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- plugins:js -->
+<script src="/Admin/vendors/js/vendor.bundle.base.js"></script>
+<script src="/Admin/vendors/js/vendor.bundle.addons.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="/Admin/js/off-canvas.js"></script>
+<script src="/Admin/js/hoverable-collapse.js"></script>
+<script src="/Admin/js/misc.js"></script>
+<script src="/Admin/js/settings.js"></script>
+<script src="/Admin/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/Admin/js/dashboard.js"></script>
+<script src="/Admin/js/editorDemo.js"></script>
+<script src="/Admin/js/data-table.js"></script>

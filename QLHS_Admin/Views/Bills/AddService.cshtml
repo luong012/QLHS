@@ -1,0 +1,83 @@
+﻿@model  QLHS_Admin.Models.BillVM
+
+@{
+    ViewData["Title"] = "Add Service";
+    var services = Model.ServiceVMs.ToList();
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Bill ID <span id="bill_id"><%= bill_id%></span></h4>
+        <br>
+        <div class="card border-primary">
+            <div class="card-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="" class="mr-1">Service</label>
+                            <select class="form-control" name="" id="service">
+                                @{ foreach (var item in services)
+                                    {
+                                <option data-price="@item.Service.Service_Price" value="@item.Service.Service_ID">@item.Service.Service_Name</option>
+                                        } }
+
+                            </select>
+                            <label for="" class="ml-5 mr-1">QTY</label>
+                            <input type="number" class="form-control " id="qty" value="1" step="1" max="20">
+                            <input type="button" id="btn" value="Add" class="btn btn-success ml-5">
+                            <a href="/admin/bill-detail/<%= bill_id %>" class="btn btn-success ml-1">Bill detail</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var bill_id;
+        var service_id;
+        var qty;
+        var str = '';
+        $('#btn').click(function () {
+
+            service_id = $('#service').val();
+            bill_id = $('#bill_id').text().trim();
+            qty = $('#qty').val();
+
+            console.log(bill_id, service_id, qty);
+            $.ajax({
+                type: "GET",
+                url: "/add-bill-service",
+                data: {
+                    service_id: $('#service').val(),
+                    bill_id: $('#bill_id').text().trim(),
+                    qty: $('#qty').val()
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response == "oke") {
+                        $.notify("Add service " + $('#service').find(':selected').text().trim() + ' with ' + $('#qty').val() + ' quantity completed !!', {
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutRight'
+                            }
+                        });
+                    } else
+                        if (response == "no") {
+                            $.notify("Errors !! ", {
+                                animate: {
+                                    enter: 'animated fadeInRight',
+                                    exit: 'animated fadeOutRight'
+                                }
+                            });
+                        }
+                }
+            });
+
+        })
+    });
+</script>

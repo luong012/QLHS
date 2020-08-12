@@ -1,0 +1,43 @@
+.card {
+  margin-top: 20vh;
+  height: 50vh;
+}
+body {
+  background: url("https://cdn10.agoda.net/images/MVC/default/background_image/illustrations/bg-agojis-1920x730.png")
+    no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+}
+.background {
+  background-color: transparent;
+  /* opacity: 0.9; */
+}
+.card-body {
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 8px;
+  box-shadow: hsla(0, 0%, 0%, 0.2) 0px 1px 6px 2px;
+  border-top: transparent;
+  opacity: 0.7;
+  border-bottom: transparent;
+}
+.card-header {
+  z-index: 1;
+  border-bottom: transparent;
+  background-color: hsl(0, 0%, 100%);
+  border-radius: 8px;
+  box-shadow: hsla(0, 0%, 0%, 0.2) 0px 1px 0px 2px;
+  color: hsl(0, 0%, 20%);
+  display: flex;
+  font-size: 14.6136px;
+  gap: normal;
+  justify-content: center;
+  line-height: 20.8766px;
+  padding: 0px 64px;
+  text-align: center;
+  height: 96px;
+  line-height: 90px;
+}
+.form-control , .custom-select , .bnt-search{
+    height: 60px;
+}

@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "";
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/index.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+    <form asp-action="Index">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col col-lg-3">
+
+                </div>
+                <div class="col-md-auto">
+                    <div class="card text-center border-white background">
+                        <div class="card-header nav justify-content-center bg-light">
+                            <ul class="nav  ">
+                                <li class="nav-item">
+                                    <a class="nav-link text-success font-weight-bold" href="#"><i class="fa fa-search fa-2x"></i> <span class="title">Tìm kiếm</span> </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="form-group">
+                                <select class="custom-select mr-sm-2" name="location">
+                                    <option value="">Tất cả địa điểm</option>
+                                    <option value="1">Hội An</option>
+                                    <option value="2">Đà Nẵng</option>
+                                </select>
+                                <div class="form-row my-3">
+                                    <div class="form-group col-md-6 ">
+                                        <input type="date" class="form-control" value="@ViewBag.sDate" id="s" name="sDate" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input type="date" class="form-control" value="@ViewBag.eDate" id="e" name="eDate" required>
+                                    </div>
+                                </div>
+                                <div class="form-row align-items-center">
+                                    <div class="col-md-8">
+                                        <input type="text"
+                                               class="form-control" name="numC" value="@ViewBag.numC" aria-describedby="helpId" placeholder="Số lượng khách">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" id="btn" class="btn btn-primary bnt-search"><i class="fa fa-search"></i> <span class></span>Tìm kiếm </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col col-lg-2">
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("#s").change(function () {
+                var today = new Date(Date.now() - 86400000)
+                var startDate = document.getElementById("s").value;
+                if (Date.parse(today) >= Date.parse(startDate)) {
+                    alert("Start date should be greater than today");
+                    document.getElementById("s").value = "";
+                }
+            })
+            $("#e").change(function () {
+
+                var startDate = document.getElementById("s").value;
+                var endDate = document.getElementById("e").value;
+
+                if (Date.parse(startDate) > Date.parse(endDate)) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("e").value = "";
+                }
+
+            });
+            $('#btn').click(function () {
+                var startDate = document.getElementById("s").value;
+                var endDate = document.getElementById("e").value;
+
+                if (Date.parse(startDate) > Date.parse(endDate)) {
+                    alert("End date should be greater than Start date");
+                    document.getElementById("e").value = "";
+                }
+            })
+        });
+    </script>
+</body>
+</html>

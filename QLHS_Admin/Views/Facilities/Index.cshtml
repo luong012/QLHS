@@ -1,0 +1,101 @@
+﻿@model IEnumerable<QLHS_Admin.Models.Facility>
+
+@{
+    ViewData["Title"] = "Facility";
+}
+
+<div class="card">
+    <div class="card-body">
+
+
+        <div class="row">
+
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                        <thead class="text-center">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Facility
+                                </th>
+                                <th>
+                                    Image
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Latitude
+                                </th>
+                                <th>
+                                    Longitude
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_Name)
+                                    </td>
+                                    <td>
+                                        <img src="@item.Fac_Img" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_Phone)
+                                    </td>
+                                    <td style="width:30%">
+                                        @Html.DisplayFor(modelItem => item.Fac_Desc)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_Latitude)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Fac_Longitude)
+                                    </td>
+                                    
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- plugins:js -->
+<script src="/Admin/vendors/js/vendor.bundle.base.js"></script>
+<script src="/Admin/vendors/js/vendor.bundle.addons.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="/Admin/js/off-canvas.js"></script>
+<script src="/Admin/js/hoverable-collapse.js"></script>
+<script src="/Admin/js/misc.js"></script>
+<script src="/Admin/js/settings.js"></script>
+<script src="/Admin/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/Admin/js/dashboard.js"></script>
+<script src="/Admin/js/editorDemo.js"></script>
+<script src="/Admin/js/data-table.js"></script>

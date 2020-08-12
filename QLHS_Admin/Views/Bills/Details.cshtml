@@ -1,0 +1,200 @@
+﻿@model QLHS_Admin.Models.BillVM
+
+@{
+    ViewData["Title"] = "Bill Details";
+    var item = Model;
+}
+
+@functions
+{
+    double multi(double a, double b)
+    {
+        return a * b;
+    }
+}
+
+@using System.Globalization
+
+
+<div class="card">
+    <div class="card-body">
+        @if (item.Bill.Bill_Status == 2)
+        {
+            <h4 class="card-title text-right">
+                <a href="/admin/bill-payment/ <%= data[0].BILL_ID%>" class="text-primary mr-5"> <i class="fa fa-plus"> </i> PAY BILL </a>
+
+                <a href="@Url.Action("AddService","Bills", new { id = item.Bill.Bill_ID})" class="text-primary"> <i class="fa fa-plus "> </i> Add Service to Bill </a>
+            </h4>
+        }
+            <br>
+            <div class="card border-primary">
+                <h1 class=" text-center my-3">
+                    BILL DETAIL
+                </h1>
+
+                <hr>
+                <div class="card-body">
+                    <h1 class="card-title text-danger">
+                        CUSTOMER INFO
+                    </h1>
+                    <h4 class="card-title">
+                        Bill :
+                        @item.Bill.Bill_ID
+                    </h4>
+                    <h4 class="card-title">
+                        Customer ID:
+                        @item.Bill.Cus_ID
+                    </h4>
+                    <h4 class="card-title">
+                        Date Checkin:
+                        @item.Bill.Bill_CheckInDate.ToString("d", new CultureInfo("vi-vn"))
+                    </h4>
+                    <h4 class="card-title">
+                        Date Checkout:
+                        @item.Bill.Bill_CheckOutDate.ToString("d", new CultureInfo("vi-vn"))
+                    </h4>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title text-danger">
+                        ROOM INFO
+                    </h1>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ROOM ID
+                                </th>
+                                <th>
+                                    ROOM TYPE NAME
+                                </th>
+                                <th>
+                                    FACILITY NAME
+                                </th>
+                                <th>
+                                    FACILITY ADDRESS
+                                </th>
+
+                                <th>
+                                    FACILITY PHONE
+                                </th>
+                                <th>
+                                    BOOK COST
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in item.RoomVMs)
+                            {
+                            <tr>
+                                <td>
+                                    @i.Room.Room_ID
+                                </td>
+                                <td>
+                                    @i.RoomTypes.ToList()[0].RoomType_Name
+                                </td>
+                                <td>
+                                    @i.Facilities.ToList()[0].Fac_Name
+                                </td>
+                                <td>
+                                    @i.Facilities.ToList()[0].Fac_Address
+                                </td>
+                                <td>
+                                    @i.Facilities.ToList()[0].Fac_Phone
+                                </td>
+                                <td class="text-right">
+                                    @{
+                                        @multi(item.Bill.Bill_CheckOutDate.Subtract(@item.Bill.Bill_CheckInDate).Days+1,(double)i.RoomTypes.ToList()[0].RoomType_Price).ToString("C0",new CultureInfo("vi-vn"))
+                                    }
+                                </td>
+                            </tr>
+                            }
+
+                            <tr class="mt-5">
+                                <td colspan="6" class="text-right">
+                                    <h4><b>BILL BOOKCOST : &nbsp; @item.Bill.Bill_BookCost.ToString("C0", new CultureInfo("vi-vn")) </b></h4>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <hr>
+                <div class="card-body">
+                    <h1 class="card-title text-danger">
+                        BILL SERVICE
+                    </h1>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    SERVICE ID
+                                </th>
+                                <th>
+                                    SERVICE NAME
+                                </th>
+                                <th>
+                                    SERVICE PRICE
+                                </th>
+                                <th>
+                                    SERVICE DURATION
+                                </th>
+
+                                <th>
+                                    QUANTITY
+                                </th>
+                                <th>
+                                    COST
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in item.ServiceVMs)
+                                {
+                            <tr>
+                                <td>
+                                    @i.Service.Service_ID
+                                </td>
+                                <td>
+                                    @i.Service.Service_Name
+                                </td>
+                                <td>
+                                    @i.Service.Service_Price
+                                </td>
+                                <td>
+                                    @i.Service.Service_Dur
+                                </td>
+                                <td>
+                                    @i.Service_Quantity
+                                </td>
+                                <td class="text-right">
+                                    @multi(i.Service_Quantity, i.Service.Service_Price).ToString("C0", new CultureInfo("vi-vn"))
+                                </td>
+                            </tr>
+                            }
+                            <tr class="mt-5">
+                                <td colspan="6" class="text-right">
+                                    <h4><b>BILL EXTRACOST : &nbsp; @item.Bill.Bill_ExtraCost.ToString("C0", new CultureInfo("vi-vn")) </b></h4>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                    <h4 class="text-danger text-center mt-5">
+                        <b>
+                            BILL TOTAL : &nbsp; @item.Bill.Bill_Total.ToString("C0", new CultureInfo("vi-vn"))
+                            @if (item.Bill.Bill_Status == 3)
+                            {
+                                <span>(PAID)</span>
+                            }
+                        </b>
+                    </h4>
+
+                </div>
+
+            </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Tuple<QLHS.Models.Room, QLHS.Models.RoomType,int>>
+
+@{
+    ViewData["Title"] = "Find";
+    string name = ViewBag.FacName ?? "Our Rooms";
+
+
+}
+
+@using System.Globalization;
+
+<body>
+
+    <div class="site-wrap">
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2 class="mb-5">@name</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        string style = (item.Item3.ToString()=="1" || item.Item3.ToString() == "2") ? "opacity: 0.4" : "opacity: 1";
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="hotel-room text-center">
+                                <a href="@Url.Action("Details", "Rooms", new { id=item.Item1.Room_ID})" class="d-block mb-0 thumbnail">
+                                    <img src="@item.Item1.Room_Img" alt="Image" class="img-fluid" style="@style" />
+                                </a>
+                                <div class="hotel-room-body">
+                                    <h3 class="heading mb-0"><a>@item.Item2.RoomType_Name</a></h3>
+                                    <strong class="price">@item.Item2.RoomType_Price.ToString("C0", new CultureInfo("vi-VN")) / per night</strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        </div>
+</body>

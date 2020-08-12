@@ -1,0 +1,304 @@
+﻿@model IEnumerable<QLHS.Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+    int i = 0;
+}
+
+
+@using System.Globalization
+
+@functions
+{
+    string rename(double a)
+    {
+        return a.ToString("C0", new CultureInfo("vi-vn"));
+    }
+    string rename2(double a, int b)
+    {
+        double r = a * b;
+        return r.ToString("C0", new CultureInfo("vi-vn"));
+    }
+
+}
+
+
+
+
+
+
+<div class="container">
+
+    <div class="row mt-5">
+        <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+            <h2>Shopping cart</h2>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="site-block-27">
+                <label for="" class="label text-left text-danger">Check in Date</label><br>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="date" id="checkin" value=@ViewData["sDate"].ToString() readonly class="form-control">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="site-block-27">
+                <label for="" class="label text-left text-danger">Check out Date</label><br>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="date" id="checkin" readonly value=@ViewData["eDate"].ToString() class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            @if (ViewBag.List != null)
+            {
+
+                <table class="table mb-5">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Room Type Name</th>
+                            <th>Facility Name</th>
+                            <th>Room Price/per night</th>
+                            <th>Room Total Price</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.List)
+                        {
+                            <tr>
+                                <td>
+                                    @(i += 1)
+                                </td>
+                                <td>
+                                    @item.Value.SelectToken("RoomType")
+                                </td>
+                                <td>
+                                    @item.Value.SelectToken("Facility")
+                                </td>
+                                <td style="text-align: right">
+                                    @rename((double)item.Value.SelectToken("Price"))
+
+                                </td>
+                                <td style="text-align: right">
+                                    @rename((double)item.Value.SelectToken("Price") * (int)ViewData["dd"])
+                                </td>
+                                <td>
+                                    <!-- <button class="btn btn-danger"> <i class="fa fa-trash"></i></button> -->
+                                    <a href="@Url.Action("RemoveItem","Cart",new { id = @item.Value.SelectToken("Room") })" class="btn btn-success form-control"> <i class="fa fa-trash fa-2x"> </i></a>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <th colspan="2">Voucher:</th>
+                            <td><input type="text" id="vcode" placeholder="Enter Voucher Code"></td>
+                            <td style="text-align: right" id="cell1"></td>
+                            <td style="text-align: right" id="cell2"></td>
+                            <td><a class="btn btn-info form-control text-white" id="getV"><i class="fa icon-fast-forward fa-2x"></i></a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="2">Grand Total:</th>
+                            <td>@ViewData["dd"] night(s)</td>
+                            <td id="unitprice" style="text-align: right">@rename((double)ViewBag.Sum)</td>
+                            <td id="grandtotal" style="text-align: right">@rename2((double)ViewBag.Sum, (int)ViewData["dd"])</td>
+                            <td><a class="btn btn-primary form-control text-white" data-toggle="collapse" data-target="#collapseExample"><i class="fa fa-check fa-2x"></i></a></td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            }
+            else
+            {<div class="alert alert-primary text-center" role="alert">
+                    <span>Cart is empty</span>
+                </div>}
+        </div>
+    </div>
+
+</div>
+
+@if (ViewBag.List != null)
+{
+    <form class="collapse" id="collapseExample" asp-action="Confirm">
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-12" id="result">
+                </div>
+
+            </div>
+            <div class="card border-primary" id="register">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="site-block-27">
+                                <label for="" class="label text-left text-success">FULL NAME</label><br>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-code"></i></span>
+                                    </div>
+                                    <input type="text" name='fullname' id="fullname" required class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mx-auto">
+                            <div class="site-block-27">
+                                <label for="" class="label text-left text-success">GENDER</label><br>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-genderless"></i></span>
+                                    </div>
+                                    <select name="gender" class="form-control" id="gender">
+                                        <option value="male">MALE</option>
+                                        <option value="female">FEMALE</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mx-auto">
+                            <div class="site-block-27">
+                                <label for="" class="label text-left text-success">ID</label><br>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                    </div>
+                                    <input type="text" name='id' id='id' pattern="[0-9]{9}" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="site-block-27">
+                                <label for="" class="label text-left text-success">EMAIL</label><br>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                                    </div>
+                                    <input type="email" required name="email" id="email" class="form-control ">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mx-auto ">
+                            <div class="site-block-27 ">
+                                <label for=" " class="label text-left text-success ">BIRTHDAY</label><br>
+                                <div class="input-group mb-3 ">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text " id="basic-addon1 "><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                    <input type="date" required name="birthday" id="birthday" class="form-control ">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mb-5 ">
+                        <div class="col-md-6 mx-auto ">
+                            <div class="site-block-27 ">
+                                <label for=" " class="label text-left text-success ">ADDRESS</label><br>
+                                <div class="input-group mb-3 ">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text " id="basic-addon1 "><i class="fa fa-map-marker"></i></span>
+                                    </div>
+                                    <input type="text" id='address' required name="address" class="form-control ">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6 mx-auto ">
+                            <div class="site-block-27 ">
+                                <label for=" " class="label text-left text-success ">PHONE</label><br>
+                                <div class="input-group mb-3 ">
+                                    <div class="input-group-prepend ">
+                                        <span class="input-group-text " id="basic-addon1 "><i class="fa fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" pattern="[0-9]{10}" id="phone" name="phone" class="form-control ">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="site-block-27 mt-2">
+                                <input type="submit" class="btn btn-success float-right" value="Confirm" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </form>
+}
+@section Scripts {
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js'></script>
+    <script>
+       $(document).ready(function () {
+           $('#getV').click(function () {
+                $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetVoucherValue")",
+            data: {
+                id: $('#vcode').val()
+            },
+            success: function (msg) {
+                console.log(msg);
+                var arr = msg.split('/');
+                $('#cell1').html('-' + arr[0] + '%');
+                $('#cell2').html('-' + arr[1]);
+                $('#unitprice').html(arr[2]);
+                $('#grandtotal').html(arr[3]);
+                if (arr[0] == 0)
+                    $.notify("Voucher không hợp lệ hoặc đã được sử dụng hết", {
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    }, {
+                        type: 'warning'
+                    });
+                else
+                    $.notify("Đã áp dụng voucher thành công!!!", {
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    }, {
+                        type: 'success'
+                    });
+            }
+        });
+           })
+    });
+    </script>
+
+}

@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/Admin/vendors/iconfonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="/Admin/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/Admin/vendors/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/Admin/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/map-pins-2/256/15-512.png" />
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+
+</header>
+<body>
+
+    <div class="container-scroller">
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" asp-controller="Home" asp-action="Index"><img src="/Admin/images/logo.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" asp-controller="Home" asp-action="Index"><img src="/Admin/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="fas fa-bars"></span>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item nav-search d-none d-md-flex">
+                        <div class="nav-link">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-nav-right">
+
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="/Admin/images/faces/face5.jpg" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/Auth/logout">
+                                <i class="fas fa-power-off text-primary"></i> Logout
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-lg-block">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-eye">View Page</i>
+                        </a>
+                    </li>
+                </ul>
+
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="fas fa-bars"></span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="container-fluid page-body-wrapper">
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <div class="nav-link">
+                            <div class="profile-image">
+                                <img src="/Admin/images/faces/face5.jpg" alt="image" />
+                            </div>
+                            <div class="profile-name">
+                                <p class="name">
+                                    Welcome
+                                </p>
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">
+                            <i class="fa fa-home menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Customers" asp-action="Index">
+                            <i class="fas fa-user-tie menu-icon"></i>
+                            <span class="menu-title">Customer</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Rooms" asp-action="Index">
+                            <i class="fas fa-bed menu-icon"></i>
+                            <span class="menu-title">Room</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="RoomTypes" asp-action="Index">
+                            <i class="fas fa-couch menu-icon"></i>
+                            <span class="menu-title">Room Type</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Facilities" asp-action="Index">
+                            <i class="fas fa-building menu-icon"></i>
+                            <span class="menu-title">Facility</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"  asp-controller="Bills" asp-action="Index">
+                            <i class="fas fa-money-bill-wave menu-icon"></i>
+                            <span class="menu-title">Bill</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Services" asp-action="Index">
+                            <i class="fas fa-car menu-icon"></i>
+                            <span class="menu-title">Service</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Features" asp-action="Index">
+                            <i class="fas fa-wifi menu-icon"></i>
+                            <span class="menu-title">Feature </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/revenue">
+                            <i class="fas fa-coins menu-icon"></i>
+                            <span class="menu-title">Revenue </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Auth/logout">
+                            <i class="fas fa-power-off menu-icon"></i>
+                            <span class="menu-title">Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h3 class="page-title">
+                            @ViewData["Title"]
+                        </h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Admin</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    @RenderBody()
+                </div>
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2018. All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="far fa-heart text-danger"></i></span>
+                    </div>
+                </footer>
+            </div>
+
+
+
+        </div>
+
+        
+
+    </div>
+
+    
+    <script src="/Admin/vendors/js/vendor.bundle.base.js"></script>
+    <script src="/Admin/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="/Admin/js/off-canvas.js"></script>
+    <script src="/Admin/js/hoverable-collapse.js"></script>
+    <script src="/Admin/js/misc.js"></script>
+    <script src="/Admin/js/settings.js"></script>
+    <script src="/Admin/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="/Admin/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

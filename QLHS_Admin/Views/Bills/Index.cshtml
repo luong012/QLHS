@@ -1,0 +1,137 @@
+﻿@model IEnumerable<QLHS_Admin.Models.Bill>
+
+@{
+    ViewData["Title"] = "Bill";
+}
+
+@using System.Globalization;
+
+
+<div class="card">
+    <div class="card-body">
+
+
+        <div class="row">
+
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table id="order-listing" class="table">
+                        <thead class="text-center">
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Customer ID
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Checkin Date
+                                </th>
+                                <th>
+                                    Checkout Date
+                                </th>
+                                <th>
+                                    N.o Customer
+                                </th>
+                                <th>
+                                    Book Cost
+                                </th>
+                                <th>
+                                    Extra Cost
+                                </th>
+                                <th>
+                                    Total Cost
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Bill_ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Cus_ID)
+                                    </td>
+                                    <td class="text-center">
+                                        @{
+                                            if (item.Bill_Status == 1)
+                                            {<span class="badge badge-pill badge-danger">Booked</span>}
+                                            else if (item.Bill_Status == 2)
+                                            {<span class="badge badge-pill badge-info">In-room</span>}
+                                            else
+                                            {<span class="badge badge-pill badge-success">Checkout</span>}
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.Bill_CheckInDate.ToString("d", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td>
+                                        @item.Bill_CheckOutDate.ToString("d", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Bill_CusNum)
+                                    </td>
+                                    <td class="text-right">
+                                        @item.Bill_BookCost.ToString("C0", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td class="text-right">
+                                        @item.Bill_ExtraCost.ToString("C0", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td>
+                                        @item.Bill_Total.ToString("C0", new CultureInfo("vi-vn"))
+                                    </td>
+                                    <td class="text-center text-success">
+                                        @{if (item.Bill_Status == 1)
+                                            {
+                                                <a href="@Url.Action("Forward", "Bills", new { id = item.Bill_ID })"><i class="fa fa-forward text-danger" aria-hidden="true"></i></a>
+                                            }
+                                            if (item.Bill_Status == 2)
+                                            {
+                                                <a href = "@Url.Action("Details","Bills", new { id=item.Bill_ID})"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;&nbsp;</a>
+
+                                        <a href="/admin/bill-service/ <%= item.BILL_ID%>"> <i class="fa fa-plus text-primary" aria-hidden="true"></i></a>
+                                            }
+                                            if (item.Bill_Status == 3)
+                                            {
+                                        <a href="/admin/bill-detail/<%= item.BILL_ID %>"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;&nbsp;</a>
+                                        <a href=""><i class="fa fa-check text-success" aria-hidden="true"></i></a>
+                                                }
+                                            }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- plugins:js -->
+<script src="/Admin/vendors/js/vendor.bundle.base.js"></script>
+<script src="/Admin/vendors/js/vendor.bundle.addons.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="/Admin/js/off-canvas.js"></script>
+<script src="/Admin/js/hoverable-collapse.js"></script>
+<script src="/Admin/js/misc.js"></script>
+<script src="/Admin/js/settings.js"></script>
+<script src="/Admin/js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script src="/Admin/js/dashboard.js"></script>
+<script src="/Admin/js/editorDemo.js"></script>
+<script src="/Admin/js/data-table.js"></script>

@@ -1,0 +1,80 @@
+﻿@model QLHS_Admin.Models.AddServiceVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<form asp-action="Create">
+    <div class="row grid-margin">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Service.Service_Name" class="control-label">Name</label>
+                        <input asp-for="Service.Service_Name" class="form-control" />
+                        <span asp-validation-for="Service.Service_Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Service.Service_Price" class="control-label">Price</label>
+                        <input asp-for="Service.Service_Price" class="form-control" />
+                        <span asp-validation-for="Service.Service_Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Service.Service_Desc" class="control-label">Description</label>
+                        <input asp-for="Service.Service_Desc" class="form-control" />
+                        <span asp-validation-for="Service.Service_Desc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Service.Service_Dur" class="control-label">Duration</label>
+                        <input asp-for="Service.Service_Dur" class="form-control" />
+                        <span asp-validation-for="Service.Service_Dur" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Service.Service_Img" class="control-label">Image</label>
+                        <input asp-for="Service.Service_Img" class="form-control" />
+                        <span asp-validation-for="Service.Service_Img" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <button class="btn btn-secondary" asp-action="Index">Back to List</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <fieldset>
+                        <div class="form-group">
+                            <ul>
+                                <label for="curl" class="text-danger"> Facility </label>
+                                @foreach (var item in Model.FFacilities)
+                                {
+                                    <li style="list-style: none">
+                                        <input type="checkbox" asp-for="@item.Flag" />
+                                        <label asp-for="@item.Flag">@item.Fac_Name</label>
+                                        <input type="hidden" asp-for="@item.Fac_ID" />
+                                        <input type="hidden" asp-for="@item.Fac_Name" />
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

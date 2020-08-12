@@ -1,0 +1,130 @@
+﻿@model QLHS.Models.Customer
+
+@{
+    ViewData["Title"] = "Confirm";
+    var item = Model;
+}
+
+
+
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+            <h2>Billing Information</h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 col-md-4">
+            <div class="card mr-1 mb-5">
+                <table class="table">
+                    <tr>
+                        <th colspan="2">Customer Detail</th>
+                    </tr>
+                    <tr>
+                        <th>Customer</th>
+                        <td>@item.Cus_Name</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>@item.Cus_Address</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@item.Cus_Email</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>@item.Cus_Phone</td>
+                    </tr>
+                    <tr>
+                        <th>Voucher</th>
+                        <td>
+                            @if ((int)ViewBag.VValue > 0)
+                            {<span>- @ViewBag.VValue.ToString() %</span>}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Grand Total</th>
+                        <td>@ViewBag.GrandTotal</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-5 col-md-8">
+            <div class="card mr-1 mb-5">
+                <table class="table">
+                    <tr>
+                        <th colspan="3">Payment Options</th>
+                    </tr>
+                    <tr>
+                        <td width="33%" class="text-center"><img width="60" height="60" src="https://static.mservice.io/img/logo-momo.png" /></td>
+                        <td width="33%" class="text-center align-middle"><img style="width: 50%" src="https://vnpayment.vnpay.vn/Resources/website/images/vnpayqr.png" /></td>
+                        <td width="33%" class="text-center"><img width="120" height="60" src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_960_720.png" /></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <input type="radio" id="option1" name="payment" value="">
+                        </td>
+                        <td class="text-center">
+                            <input type="radio" id="option2" name="payment" value="">
+                        </td>
+                        <td class="text-center">
+                            <input type="radio" id="option3" name="payment" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" colspan="3">
+                            <img style="width: 30%; height: 30%" src="https://miro.medium.com/max/750/0*ZcTJOzU8wZLVVr6C.jpeg" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" colspan="3">
+                            <button id="add" class="text-dark btn btn-outline-success rounded-0 text-uppercase" >Pay Bill</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.7/bootstrap-notify.min.js'></script>
+    <script>
+       $(document).ready(function () {
+           $('#add').click(function () {
+                $.ajax({
+            type: "POST",
+            url: "@Url.Action("Add")",
+            data: {},
+            success: function (msg) {
+                if (msg==1)
+                    $.notify("Đã đặt phòng thành công, vui lòng kiểm tra chi tiết hoá đơn tại Email", {
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    }, {
+                        type: 'warning'
+                    });
+                else
+                    $.notify("Có lỗi xảy ra, đặt phòng thất bại", {
+                        animate: {
+                            enter: 'animated bounceInDown',
+                            exit: 'animated bounceOutUp'
+                        }
+                    }, {
+                        type: 'success'
+                    });
+            }
+        });
+           })
+    });
+    </script>
+
+}
+

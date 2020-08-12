@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Tuple<QLHS.Models.Room, QLHS.Models.RoomType>>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using System.Globalization;
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomType_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fac_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room_Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room_Img)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoomType_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fac_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Room_Status)
+                        </td>
+                        <td>
+                            <img src=@item.Room_Img width="20%" height="20%" style="object-fit:cover">
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Room_ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Room_ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Room_ID">Delete</a>
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>*@
+<body>
+
+    <div class="site-wrap">
+        <div class="site-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2 class="mb-5">Our Rooms</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-md-6 col-lg-4 mb-5">
+                            <div class="hotel-room text-center">
+                                <a href="@Url.Action("Details", "Rooms", new { id=item.Item1.Room_ID})" class="d-block mb-0 thumbnail"><img src="@item.Item1.Room_Img" alt="Image" class="img-fluid"></a>
+                                <div class="hotel-room-body">
+                                    <h3 class="heading mb-0"><a >@item.Item2.RoomType_Name</a></h3>
+                                    <strong class="price">@item.Item2.RoomType_Price.ToString("C0", new CultureInfo("vi-VN")) / per night</strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+</body>

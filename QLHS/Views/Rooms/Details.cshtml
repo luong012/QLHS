@@ -1,0 +1,171 @@
+﻿@model Object
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+@{
+    var item = Model;
+    string a="";
+}
+
+@using System.Globalization;
+
+
+@functions
+{
+    string rename(double a)
+    {
+        return a.ToString("C0", new CultureInfo("vi-vn"));
+    }
+}
+
+
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                <h2 class="mb-5">Room Detail</h2>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-5 mb-md-0">
+                <div class="img-border">
+                    <a>
+                        <span class="icon-wrap">
+                        </span>
+                        <img src=@item.GetType().GetProperty("Img").GetValue(item, null) alt="" class="img-fluid">
+                    </a>
+                </div>
+
+                <img src=@item.GetType().GetProperty("Img").GetValue(item, null) alt="Image" class="img-fluid image-absolute">
+
+            </div>
+            <div class="col-md-5 ml-auto">
+
+                <div class="section-heading text-left">
+
+                    <h2 class="mb-5">
+                        @item.GetType().GetProperty("Name").GetValue(item, null)
+                        <br>
+                    </h2>
+                    <br>
+
+                </div>
+                <p class="mb-4">
+                    @item.GetType().GetProperty("Desc").GetValue(item, null)
+                </p>
+
+                <br>
+                <span class="mb-5 text-dark">
+                    Giá phòng:  <i class="text-dark"> @rename((double)item.GetType().GetProperty("Price").GetValue(item, null))</i>
+                </span>
+                <br>
+                <span class="mb-5 text-dark">
+                    Số người:  <i class="text-dark"> @item.GetType().GetProperty("MaxCusNum").GetValue(item, null) </i>
+                </span>
+                <br>
+                <span class="mb-5 text-dark">
+                    Kích thước:  <i class="text-dark"> @item.GetType().GetProperty("Size").GetValue(item, null) m <sup>2</sup></i>
+                </span>
+
+                <p class="mt-4">
+                    <span class="mb-5 text-dark">
+                        Facility :  <a href=@Url.Action("Find", "Rooms", new { facID=@item.GetType().GetProperty("FacID").GetValue(item, null), numC=ViewBag.numC})><i class="text-dark"> @item.GetType().GetProperty("Fac").GetValue(item, null) </i></a>
+                    </span>
+                    <br>
+                    <span class="mb-5 text-dark">
+                        Address :  <i class="text-dark"> @item.GetType().GetProperty("Address").GetValue(item, null) </i>
+                    </span>
+                </p>
+
+                @if ((int)ViewData["numC"] > (int)item.GetType().GetProperty("MaxCusNum").GetValue(item, null))
+                {<p><a class=" text-uppercase">This room only for @item.GetType().GetProperty("MaxCusNum").GetValue(item, null) people </a></p>}
+                else if (ViewData["Flag"].ToString()=="1")
+                { <p><a class=" text-uppercase">Room is currently unavailable</a></p>}
+                else
+                { <form asp-action="Details">
+    <button type="submit" class="text-info btn btn-outline-warning rounded-0 text-uppercase">Add to Cart</button>
+    <input type="hidden" name="roomID" value="@item.GetType().GetProperty("ID").GetValue(item, null).ToString()">
+    <input type="hidden" name="roomType" value="@item.GetType().GetProperty("Name").GetValue(item, null).ToString()">
+    <input type="hidden" name="facility" value="@item.GetType().GetProperty("Fac").GetValue(item, null).ToString()">
+    <input type="hidden" name="price" value="@item.GetType().GetProperty("Price").GetValue(item, null).ToString()">
+</form>}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                <h2 class="mb-5">Room Features</h2>
+            </div>
+        </div>
+        <div class="row">
+            @{
+                for (int i = 0; i < ViewBag.ListFT.Count; i++)
+                {
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="text-center p-4 item">
+                            <span><img src="@ViewBag.ListFT[i].Feature_Icon"></span>
+                            <h2 class="h5">@ViewBag.ListFT[i].Feature_Name</h2>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                <h2 class="mb-5">Homestay Location</h2>
+            </div>
+        </div>
+
+        <div id="dvMap" style="height:550px;"></div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA4XZFWbbjoyED-K0QV4x_wbCRraKkINsY&callback=initMap" async defer></script>
+        <script type="text/javascript">
+  function initMap() {
+    //map..
+    var map = new google.maps.Map(document.getElementById('dvMap'), {
+        center: {
+            lat:  @item.GetType().GetProperty("Lat").GetValue(item, null),
+            lng:  @item.GetType().GetProperty("Long").GetValue(item, null)
+        },
+        zoom: 15
+    });
+    //marker..
+    var marker = new google.maps.Marker({
+        position: {
+            lat:  @item.GetType().GetProperty("Lat").GetValue(item, null),
+            lng:  @item.GetType().GetProperty("Long").GetValue(item, null)
+        },
+        map: map,
+        draggable: true
+    });
+
+			//dragend event of marker
+google.maps.event.addListener(marker,'dragend', function () {
+    var Lats = marker.getPosition().lat();
+    var Longs = marker.getPosition().lng();
+
+    $('#Lat').val(Lats);
+    $('#Long').val(Longs);
+
+});
+}
+        </script>
+    </div>
+</div>
