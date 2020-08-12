@@ -112,7 +112,7 @@ namespace QLHS.Controllers
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
 
                 // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("royalhsbill@gmail.com", "luong05642010");
+                client.Authenticate("royalhsbill@gmail.com", "**********");
 
                 client.Send(message);
                 client.Disconnect(true);
